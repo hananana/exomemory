@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "exomemory",
+  "description": "Cognitive science-based external memory plugin for Claude Code",
+  "owner": {
+    "name": "hananana"
+  },
+  "plugins": [
+    {
+      "name": "exomemory",
+      "description": "Manages structured long-term knowledge through encoding, storage, forgetting, and retrieval — the four stages of human memory.",
+      "source": ".",
+      "category": "productivity",
+      "homepage": "https://github.com/hananana/exomemory"
+    }
+  ]
+}
