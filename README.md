@@ -17,15 +17,40 @@ Manages structured long-term knowledge through the four stages of human memory: 
 
 ## Installation
 
-### Development / Local use
+### Via marketplace (recommended)
+
+Add the marketplace to your Claude Code settings (`~/.claude/settings.json`):
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "exomemory": {
+      "source": {
+        "source": "github",
+        "repo": "hananana/exomemory"
+      }
+    }
+  }
+}
+```
+
+Then install and enable the plugin:
+
+```
+/plugin install exomemory@exomemory
+```
+
+### For development
 
 ```bash
-claude --plugin-dir /path/to/exomemory
+claude --plugin-dir /path/to/exomemory/plugins/exomemory
 ```
+
+Use `/reload-plugins` to pick up changes without restarting.
 
 ### First-time setup
 
-After loading the plugin, run:
+After installing the plugin, run:
 
 ```
 /exomemory:memory-setup
@@ -72,21 +97,26 @@ Use `--dry-run` to preview without making changes:
 └── archive/                   # Expired entries (grouped by month)
 ```
 
-## Plugin structure
+## Repository structure
 
 ```
 exomemory/
 ├── .claude-plugin/
-│   └── plugin.json            # Plugin manifest
-├── hooks/
-│   └── hooks.json             # SessionStart hook definition
-├── hooks-handlers/
-│   └── session-start.sh       # Loads MEMORY.md into session context
-├── skills/
-│   ├── memory-recall/         # Auto-triggered retrieval (R×I×R scoring)
-│   ├── memory-maintenance/    # Monthly maintenance (/exomemory:memory-maintenance)
-│   └── memory-setup/          # First-time setup (/exomemory:memory-setup)
-└── templates/                 # Initial file templates for setup
+│   └── marketplace.json        # Marketplace definition
+├── plugins/
+│   └── exomemory/
+│       ├── .claude-plugin/
+│       │   └── plugin.json     # Plugin manifest
+│       ├── hooks/
+│       │   └── hooks.json      # SessionStart hook definition
+│       ├── hooks-handlers/
+│       │   └── session-start.sh
+│       ├── skills/
+│       │   ├── memory-recall/  # Auto-triggered retrieval (R×I×R scoring)
+│       │   ├── memory-maintenance/  # /exomemory:memory-maintenance
+│       │   └── memory-setup/   # /exomemory:memory-setup
+│       └── templates/          # Initial file templates for setup
+└── README.md
 ```
 
 ## References
