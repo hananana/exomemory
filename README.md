@@ -1,25 +1,27 @@
 # Exomemory
 
-Cognitive science-based external memory plugin for Claude Code.
+認知科学ベースの外部記憶プラグイン for Claude Code。
 
-Manages structured long-term knowledge through the four stages of human memory: **encoding**, **storage**, **forgetting**, and **retrieval**.
+人間の記憶の4段階 — **符号化**・**保持**・**忘却**・**想起** — をAIエージェントの長期知識管理として実装します。
 
-## Features
+> [English version](./README.en.md)
 
-- **3 memory types** based on cognitive science (Tulving, 1972):
-  - **Episodic** — time-stamped events, discussions, discoveries (90-day TTL)
-  - **Semantic** — reusable rules, frameworks, decision records (indefinite)
-  - **Procedural** — work preferences, behavioral patterns (until changed)
-- **R×I×R scoring** for retrieval: Recency × Importance × Relevance
-- **Automatic forgetting** — TTL-based expiry and monthly maintenance
-- **Memory promotion** — frequently-referenced episodes consolidate into semantic memory
-- **SessionStart hook** — memory index is loaded automatically at session start
+## 特徴
 
-## Installation
+- **3種類の記憶** — 認知科学の分類（Tulving, 1972）に基づく:
+  - **エピソード記憶** — 日付付きの出来事・議論・気づき（TTL: 90日）
+  - **意味記憶** — 再利用可能なルール・フレームワーク・意思決定記録（無期限）
+  - **手続き記憶** — 作業スタイル・好み・行動パターン（変更まで永続）
+- **R×I×R スコアリング** による想起: Recency（鮮度）× Importance（重要度）× Relevance（関連度）
+- **自動忘却** — TTLベースの失効と月次メンテナンス
+- **記憶の昇格** — 頻繁に参照されるエピソード記憶を意味記憶に固定化
+- **SessionStart フック** — セッション開始時に記憶インデックスを自動読み込み
 
-### Via marketplace (recommended)
+## インストール
 
-Add the marketplace to your Claude Code settings (`~/.claude/settings.json`):
+### マーケットプレイス経由（推奨）
+
+Claude Code の設定ファイル（`~/.claude/settings.json`）にマーケットプレイスを追加:
 
 ```json
 {
@@ -34,98 +36,98 @@ Add the marketplace to your Claude Code settings (`~/.claude/settings.json`):
 }
 ```
 
-Then install and enable the plugin:
+プラグインをインストール:
 
 ```
 /plugin install exomemory@exomemory
 ```
 
-### For development
+### 開発用
 
 ```bash
 claude --plugin-dir /path/to/exomemory/plugins/exomemory
 ```
 
-Use `/reload-plugins` to pick up changes without restarting.
+変更を反映するには `/reload-plugins` を実行。
 
-### First-time setup
+### 初回セットアップ
 
-After installing the plugin, run:
+インストール後、以下を実行して記憶ディレクトリを初期化:
 
 ```
 /exomemory:memory-setup
 ```
 
-This creates the memory directory at `~/.local/share/exomemory/`.
+`~/.local/share/exomemory/` に記憶ファイル群が作成されます。
 
-## Usage
+## 使い方
 
-### Automatic recall
+### 自動想起
 
-The `memory-recall` skill triggers automatically when you reference past discussions, decisions, or patterns. It reads the memory index and retrieves relevant entries using R×I×R scoring.
+`memory-recall` スキルは、過去の議論・決定・経験に言及したときに自動でトリガーされます。MEMORY.md のインデックスを読み、R×I×R スコアリングで関連する記憶を取得します。
 
-### Monthly maintenance
+### 月次メンテナンス
 
 ```
 /exomemory:memory-maintenance
 ```
 
-Performs:
-- TTL enforcement (archive entries older than 90 days)
-- Promotion of frequently-referenced episodic memories to semantic memory
-- Compression of old verbose entries
-- Index integrity verification
+実行内容:
+- TTL切れエントリのアーカイブ（90日超）
+- 頻繁に参照されるエピソード記憶の意味記憶への昇格
+- 古い冗長なエントリの圧縮
+- インデックスの整合性チェック
 
-Use `--dry-run` to preview without making changes:
+`--dry-run` で変更せずにプレビュー:
 
 ```
 /exomemory:memory-maintenance --dry-run
 ```
 
-## Memory directory structure
+## 記憶ディレクトリ構造
 
 ```
 ~/.local/share/exomemory/
-├── MEMORY.md                 # Index (entry point for recall)
+├── MEMORY.md                 # インデックス（想起のエントリポイント）
 ├── episodic/
-│   └── context-log.md        # Time-series events and discussions
+│   └── context-log.md        # エピソード記憶（時系列の出来事・議論）
 ├── semantic/
-│   ├── frameworks.md          # Reusable rules and patterns
-│   └── decisions.md           # Key decisions and reasoning
+│   ├── frameworks.md          # 意味記憶（ルール・パターン）
+│   └── decisions.md           # 意味記憶（意思決定記録）
 ├── procedural/
-│   └── preferences.md         # Work style and preferences
-└── archive/                   # Expired entries (grouped by month)
+│   └── preferences.md         # 手続き記憶（作業スタイル・好み）
+└── archive/                   # アーカイブ（TTL切れエントリ、月別）
 ```
 
-## Repository structure
+## リポジトリ構造
 
 ```
 exomemory/
 ├── .claude-plugin/
-│   └── marketplace.json        # Marketplace definition
+│   └── marketplace.json        # マーケットプレイス定義
 ├── plugins/
 │   └── exomemory/
 │       ├── .claude-plugin/
-│       │   └── plugin.json     # Plugin manifest
+│       │   └── plugin.json     # プラグインマニフェスト
 │       ├── hooks/
-│       │   └── hooks.json      # SessionStart hook definition
+│       │   └── hooks.json      # SessionStart フック定義
 │       ├── hooks-handlers/
 │       │   └── session-start.sh
 │       ├── skills/
-│       │   ├── memory-recall/  # Auto-triggered retrieval (R×I×R scoring)
+│       │   ├── memory-recall/  # 自動想起（R×I×R スコアリング）
 │       │   ├── memory-maintenance/  # /exomemory:memory-maintenance
 │       │   └── memory-setup/   # /exomemory:memory-setup
-│       └── templates/          # Initial file templates for setup
+│       └── templates/          # 初回セットアップ用テンプレート
 └── README.md
 ```
 
-## References
+## 参考文献
 
-- [認知科学でAI秘書の記憶を再設計したら別人になった話](https://note.com/hatakejp/n/naae38195e8d8) — Design inspiration
-- Atkinson & Shiffrin (1968) — Multi-store memory model
-- Tulving (1972) — Episodic and semantic memory
-- Park et al. (2023) — Generative Agents (Stanford) — R×I×R scoring
+- [認知科学でAI秘書の記憶を再設計したら別人になった話](https://note.com/hatakejp/n/naae38195e8d8) — 設計のインスピレーション元
+- Atkinson & Shiffrin (1968) — 多重貯蔵モデル
+- Tulving (1972) — エピソード記憶と意味記憶
+- Park et al. (2023) — Generative Agents (Stanford) — R×I×R スコアリング
 
-## License
+## ライセンス
 
 MIT
