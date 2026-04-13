@@ -42,14 +42,6 @@ Then install the plugin:
 /plugin install exomemory@exomemory
 ```
 
-### For development
-
-```bash
-claude --plugin-dir /path/to/exomemory/plugins/exomemory
-```
-
-Use `/reload-plugins` to pick up changes without restarting.
-
 ### First-time setup
 
 After installing the plugin, run:
