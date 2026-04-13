@@ -13,7 +13,7 @@ Manages structured long-term knowledge through the four stages of human memory: 
   - **Semantic** — reusable rules, frameworks, decision records (indefinite)
   - **Procedural** — work preferences, behavioral patterns (until changed)
 - **R×I×R scoring** for retrieval: Recency × Importance × Relevance
-- **Automatic forgetting** — TTL-based expiry and monthly maintenance
+- **Automatic forgetting** — TTL-based expiry and monthly maintenance (auto-checked at session start)
 - **Memory promotion** — frequently-referenced episodes consolidate into semantic memory
 - **SessionStart hook** — memory index is loaded automatically at session start
 
@@ -54,11 +54,25 @@ This creates the memory directory at `~/.local/share/exomemory/`.
 
 ## Usage
 
-### Automatic recall
+### Remember
 
-The `memory-recall` skill triggers automatically when you reference past discussions, decisions, or patterns. It reads the memory index and retrieves relevant entries using R×I×R scoring.
+```
+/exomemory:remember <what to remember>
+```
+
+Automatically classifies the content into the appropriate memory type (episodic, semantic, or procedural) and saves it.
+
+### Recall
+
+```
+/exomemory:recall <what to recall>
+```
+
+Searches and retrieves relevant memories using R×I×R scoring. Referenced episodic memory entries have their `refs` count automatically updated.
 
 ### Monthly maintenance
+
+Maintenance runs automatically when a session starts and more than 30 days have passed since the last run. To run manually:
 
 ```
 /exomemory:memory-maintenance
@@ -106,7 +120,8 @@ exomemory/
 │       ├── hooks-handlers/
 │       │   └── session-start.sh
 │       ├── skills/
-│       │   ├── memory-recall/  # Auto-triggered retrieval (R×I×R scoring)
+│       │   ├── remember/       # /exomemory:remember (save memories)
+│       │   ├── recall/         # /exomemory:recall (retrieve memories)
 │       │   ├── memory-maintenance/  # /exomemory:memory-maintenance
 │       │   └── memory-setup/   # /exomemory:memory-setup
 │       └── templates/          # Initial file templates for setup
