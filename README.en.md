@@ -42,6 +42,14 @@ Then install the plugin:
 /plugin install exomemory@exomemory
 ```
 
+### Update
+
+```
+claude plugin update exomemory@exomemory
+```
+
+Restart Claude Code after updating to apply the changes.
+
 ### First-time setup
 
 After installing the plugin, run:
