@@ -62,28 +62,7 @@ Judge by comparing the current conversation topic against MEMORY.md index entrie
 2. **Score** — Apply R×I×R to identify the most relevant entries
 3. **Load** — Read only the files/sections needed for the current context
 
-## Encoding: When to Save New Memories
-
-When you learn something worth remembering during a session, save it to the appropriate file:
-
-| What | Where |
-|---|---|
-| Decision and its reasoning | `semantic/decisions.md` |
-| Reusable rule or pattern | `semantic/frameworks.md` |
-| User preference or work style | `procedural/preferences.md` |
-| Event, discussion, discovery (with date) | `episodic/context-log.md` |
-| Temporary info, derivable from code | Do NOT save |
-
-### Episodic entry format
-
-```markdown
-## YYYY-MM-DD: Title
-<!-- refs: 0 | last_ref: YYYY-MM-DD -->
-- Description of what happened
-- Key points
-```
-
-### Updating refs on access
+## Updating refs on access
 
 When you read an episodic memory entry to answer a user's question:
 1. Increment `refs` by 1
@@ -92,10 +71,6 @@ When you read an episodic memory entry to answer a user's question:
 
 This metadata drives TTL resets and promotion decisions in maintenance.
 
-## Updating the Index
+## Saving new memories
 
-After adding a new entry to any memory file, add a corresponding line to `MEMORY.md` under the appropriate section. Keep each line under ~150 characters:
-
-```markdown
-- [Title](episodic/context-log.md#yyyy-mm-dd-title) — one-line summary [tags]
-```
+Do NOT save memories from this skill. Direct the user to run `/exomemory:remember` instead.
