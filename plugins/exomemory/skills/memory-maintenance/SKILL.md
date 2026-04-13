@@ -62,6 +62,16 @@ Verify `MEMORY.md` is consistent with actual files:
 - Remove orphaned index entries
 - Add missing index entries
 
+## Post-maintenance: Update timestamp
+
+After all operations (unless `--dry-run`), record the current time:
+
+```bash
+date +%s > ~/.local/share/exomemory/.last_maintenance
+```
+
+This timestamp is checked by the SessionStart hook to determine when maintenance is next due.
+
 ## Report
 
 After all operations, summarize:
@@ -69,4 +79,4 @@ After all operations, summarize:
 - Entries promoted (count + titles)
 - Entries compressed (count)
 - Index fixes applied (count)
-- Next maintenance suggested: first of next month
+- Next maintenance: ~30 days from now (checked automatically at session start)
