@@ -1,20 +1,12 @@
 ---
-name: memory-recall
-description: >
-  Retrieves relevant memories from the exomemory system using R×I×R scoring.
-  TRIGGER: when the user references past discussions, decisions, experiences, or patterns.
-  Keywords: "before", "last time", "remember", "we decided", "that discussion", "previous".
-  Also triggers when context from past sessions would improve the current response.
-tools: [Read, Edit, Glob, Grep]
+description: "Retrieve relevant memories from the exomemory system using R×I×R scoring."
+argument-hint: <what to recall>
+allowed-tools: [Read, Edit, Glob, Grep]
 ---
 
 # Exomemory Recall
 
-You are the recall component of the Exomemory system — a cognitive science-based external memory for AI agents.
-
-## Memory Location
-
-All memory files are at `~/.local/share/exomemory/`.
+Retrieve memories relevant to `$ARGUMENTS` from the exomemory system at `~/.local/share/exomemory/`.
 
 ## Memory Types
 
@@ -27,7 +19,7 @@ All memory files are at `~/.local/share/exomemory/`.
 
 ## Retrieval: R×I×R Scoring
 
-When deciding which memories to retrieve, score each entry:
+Score each memory entry:
 
 ```
 Score(memory) = Recency × Importance × Relevance
@@ -54,23 +46,23 @@ Score(memory) = Recency × Importance × Relevance
 
 ### Relevance (contextual match)
 
-Judge by comparing the current conversation topic against MEMORY.md index entries (title + tags + summary). No vector DB needed — read the index and use your judgment.
+Judge by comparing `$ARGUMENTS` against MEMORY.md index entries (title + tags + summary). No vector DB needed — read the index and use your judgment.
 
-## Retrieval Process (3 phases)
+## Retrieval Process
 
 1. **Scan** — Read `~/.local/share/exomemory/MEMORY.md` to get the full index
 2. **Score** — Apply R×I×R to identify the most relevant entries
-3. **Load** — Read only the files/sections needed for the current context
+3. **Load** — Read only the files/sections needed
 
 ## Updating refs on access
 
-When you read an episodic memory entry to answer a user's question:
+When you read an episodic memory entry:
 1. Increment `refs` by 1
 2. Update `last_ref` to today's date
 3. Use Edit tool to apply the change
 
 This metadata drives TTL resets and promotion decisions in maintenance.
 
-## Saving new memories
+## Report
 
-Do NOT save memories from this skill. Direct the user to run `/exomemory:remember` instead.
+Present the retrieved memories to the user, organized by relevance. If nothing relevant is found, say so.
