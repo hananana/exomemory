@@ -9,7 +9,7 @@
     {
       "name": "exomemory",
       "description": "Manages structured long-term knowledge through encoding, storage, forgetting, and retrieval — the four stages of human memory.",
-      "source": ".",
+      "source": "./plugins/exomemory",
       "category": "productivity",
       "homepage": "https://github.com/hananana/exomemory"
     }
