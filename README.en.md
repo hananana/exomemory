@@ -45,7 +45,7 @@ Then install the plugin:
 ### Update
 
 ```
-claude plugin update exomemory@exomemory
+/plugin update exomemory@exomemory
 ```
 
 Restart Claude Code after updating to apply the changes.
