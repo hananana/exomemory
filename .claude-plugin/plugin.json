@@ -1,0 +1,10 @@
+{
+  "name": "exomemory",
+  "description": "Cognitive science-based external memory system for AI agents. Manages structured long-term knowledge through encoding, storage, forgetting, and retrieval — the four stages of human memory.",
+  "version": "0.1.0",
+  "author": {
+    "name": "hananana"
+  },
+  "homepage": "https://github.com/hananana/exomemory",
+  "repository": "https://github.com/hananana/exomemory"
+}

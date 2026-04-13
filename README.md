@@ -1,0 +1,101 @@
+# Exomemory
+
+Cognitive science-based external memory plugin for Claude Code.
+
+Manages structured long-term knowledge through the four stages of human memory: **encoding**, **storage**, **forgetting**, and **retrieval**.
+
+## Features
+
+- **3 memory types** based on cognitive science (Tulving, 1972):
+  - **Episodic** — time-stamped events, discussions, discoveries (90-day TTL)
+  - **Semantic** — reusable rules, frameworks, decision records (indefinite)
+  - **Procedural** — work preferences, behavioral patterns (until changed)
+- **R×I×R scoring** for retrieval: Recency × Importance × Relevance
+- **Automatic forgetting** — TTL-based expiry and monthly maintenance
+- **Memory promotion** — frequently-referenced episodes consolidate into semantic memory
+- **SessionStart hook** — memory index is loaded automatically at session start
+
+## Installation
+
+### Development / Local use
+
+```bash
+claude --plugin-dir /path/to/exomemory
+```
+
+### First-time setup
+
+After loading the plugin, run:
+
+```
+/exomemory:memory-setup
+```
+
+This creates the memory directory at `~/.local/share/exomemory/`.
+
+## Usage
+
+### Automatic recall
+
+The `memory-recall` skill triggers automatically when you reference past discussions, decisions, or patterns. It reads the memory index and retrieves relevant entries using R×I×R scoring.
+
+### Monthly maintenance
+
+```
+/exomemory:memory-maintenance
+```
+
+Performs:
+- TTL enforcement (archive entries older than 90 days)
+- Promotion of frequently-referenced episodic memories to semantic memory
+- Compression of old verbose entries
+- Index integrity verification
+
+Use `--dry-run` to preview without making changes:
+
+```
+/exomemory:memory-maintenance --dry-run
+```
+
+## Memory directory structure
+
+```
+~/.local/share/exomemory/
+├── MEMORY.md                 # Index (entry point for recall)
+├── episodic/
+│   └── context-log.md        # Time-series events and discussions
+├── semantic/
+│   ├── frameworks.md          # Reusable rules and patterns
+│   └── decisions.md           # Key decisions and reasoning
+├── procedural/
+│   └── preferences.md         # Work style and preferences
+└── archive/                   # Expired entries (grouped by month)
+```
+
+## Plugin structure
+
+```
+exomemory/
+├── .claude-plugin/
+│   └── plugin.json            # Plugin manifest
+├── hooks/
+│   └── hooks.json             # SessionStart hook definition
+├── hooks-handlers/
+│   └── session-start.sh       # Loads MEMORY.md into session context
+├── skills/
+│   ├── memory-recall/         # Auto-triggered retrieval (R×I×R scoring)
+│   ├── memory-maintenance/    # Monthly maintenance (/exomemory:memory-maintenance)
+│   └── memory-setup/          # First-time setup (/exomemory:memory-setup)
+└── templates/                 # Initial file templates for setup
+```
+
+## References
+
+- [認知科学でAI秘書の記憶を再設計したら別人になった話](https://note.com/hatakejp/n/naae38195e8d8) — Design inspiration
+- Atkinson & Shiffrin (1968) — Multi-store memory model
+- Tulving (1972) — Episodic and semantic memory
+- Park et al. (2023) — Generative Agents (Stanford) — R×I×R scoring
+
+## License
+
+MIT
