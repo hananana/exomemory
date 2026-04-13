@@ -6,6 +6,8 @@
 
 > [English version](./README.en.md)
 
+![Exomemory Architecture](docs/architecture.png)
+
 ## 特徴
 
 - **3種類の記憶** — 認知科学の分類（Tulving, 1972）に基づく:
