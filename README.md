@@ -1,5 +1,12 @@
 # Exomemory
 
+> ⚠️ **DEPRECATED — このリポジトリはメンテナンスを終了しました。**
+>
+> 後継は [hananana/exomemory2](https://github.com/hananana/exomemory2)。
+> v2 は [Andrej Karpathy の LLM Wiki パターン](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) を軸にゼロから再設計されています。v1 の tier 式メモリ（episodic / semantic / procedural）は v2 の sources / entities / concepts に直接対応しないため、移行はまっさらから始めるのが推奨です。
+>
+> このリポジトリは今後アーカイブ予定。Issue/PR は受け付けません。
+
 認知科学ベースの外部記憶プラグイン for Claude Code。
 
 人間の記憶の4段階 — **符号化**・**保持**・**忘却**・**想起** — をAIエージェントの長期知識管理として実装します。

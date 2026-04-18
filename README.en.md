@@ -1,5 +1,12 @@
 # Exomemory
 
+> ⚠️ **DEPRECATED — this repository is no longer maintained.**
+>
+> Succeeded by [hananana/exomemory2](https://github.com/hananana/exomemory2).
+> v2 is a ground-up redesign around [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f). v1's tiered memory (episodic / semantic / procedural) does not map onto v2's sources / entities / concepts; a fresh start is recommended.
+>
+> This repository will be archived soon. Issues and PRs are not accepted.
+
 Cognitive science-based external memory plugin for Claude Code.
 
 Manages structured long-term knowledge through the four stages of human memory: **encoding**, **storage**, **forgetting**, and **retrieval**.
